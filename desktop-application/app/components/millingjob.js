@@ -65,7 +65,7 @@ export default class MillingJob extends Component {
         var line = data[i];
         if (line.indexOf('(') != 0 && line.indexOf(')') != 0){
           var tokens = line.split(' ');
-          if (tokens[0] == 'G00' || tokens[0] == 'G00'){
+          if (tokens[0] == 'G00' || tokens[0] == 'G01'){
             var axis= tokens[1].substring(0,1);
             var move = tokens[1].substring(1);
             if (axis != "Z"){
@@ -401,7 +401,7 @@ export default class MillingJob extends Component {
         var x = row[0], y = row[1];
         this.props.home._addCommand.call(this.props.home, "G00 X"+Number(x).toFixed(4)+" Y"+Number(y).toFixed(4)+" F"+Number(this.props.home.state.settings.fastfeedrate).toFixed(4));
       }
-      this.props.home._addCommand.call(this.props.home, "SEEKZERO G00 Z"+Number(this.props.home.state.millingjob.maxProbeDepth).toFixed(4)+ " F"+Number(this.props.home.state.millingjob.probeSpeed).toFixed(4));
+      this.props.home._addCommand.call(this.props.home, "SEEKZERO G01 Z"+Number(this.props.home.state.millingjob.maxProbeDepth).toFixed(4)+ " F"+Number(this.props.home.state.millingjob.probeSpeed).toFixed(4));
       this.props.home._sendCommand.call(this.props.home, true);
       this._waitForZero.call(this, x, y, this._foundZero.bind(this, null, x, y, callback));
     }else{
@@ -783,7 +783,7 @@ export default class MillingJob extends Component {
               var line = data[i];
               if (line.indexOf('(') != 0 && line.indexOf(')') != 0){
                 var tokens = line.split(' ');
-                if (tokens[0] == 'G00' || tokens[0] == 'G00'){
+                if (tokens[0] == 'G00' || tokens[0] == 'G01'){
                   var axis= tokens[1].substring(0,1);
                   var move = tokens[1].substring(1);
                   if (axis == "Z"){
